@@ -1,0 +1,47 @@
+.masthead {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #162e63, #2563eb);
+}
+
+header.masthead::before {
+    display: none;
+}
+
+header.masthead > .container {
+    position: relative;
+    z-index: 1;
+}
+
+.ajax-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(12, 24, 50, 0.68);
+}
+
+.ajax-loader .spinner-border {
+    width: 3.5rem;
+    height: 3.5rem;
+}
+
+.footer {
+    border-top: 1px solid #e9ecef;
+}
+
+.autocomplete-results {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    z-index: 1050;
+    max-height: 320px;
+    overflow: auto;
+}
+
+.hero-img {
+    max-height: 450px;
+    object-fit: cover;
+}
