@@ -16,7 +16,9 @@ class RegistrationTest extends TestCase
     {
         $response = $this->get('/register');
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+            ->assertSee('x-bind:type="visible ? \'text\' : \'password\'"', false)
+            ->assertSee(__('messages.show_password'));
     }
 
     public function test_new_users_can_register(): void
@@ -41,7 +43,11 @@ class RegistrationTest extends TestCase
         $response->assertRedirect(route('savings', absolute: false));
         $this->assertAuthenticated();
         $this->assertDatabaseHas('files', ['file_type' => 'photo', 'mime_type' => 'image/png']);
-        $this->assertDatabaseHas('password_reset_tokens', ['email' => 'test@example.com']);
+        $this->assertDatabaseHas('users', ['firstname' => 'Test', 'lastname' => 'User']);
+        $this->assertDatabaseHas('password_reset_tokens', [
+            'email' => 'test@example.com',
+            'phone' => '+33123456789',
+        ]);
         $this->assertMatchesRegularExpression('/^\d{6}$/', PasswordResetToken::where('email', 'test@example.com')->firstOrFail()->token);
         $this->assertDatabaseHas('notifications', ['type' => 'welcome_new_member']);
     }

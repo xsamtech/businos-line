@@ -29,8 +29,8 @@
                 <div><x-input-label :for="$name" :value="$label"/><x-text-input :id="$name" class="mt-1 block w-full" :type="$type" :name="$name" :value="old($name)" required/><x-input-error :messages="$errors->get($name)" class="mt-2"/></div>
             @endforeach
             <div><x-input-label for="id_card" value="Carte d’identité"/><input id="id_card" class="mt-1 block w-full" type="file" name="id_card" accept="image/*,.pdf" required><x-input-error :messages="$errors->get('id_card')"/></div>
-            <div><x-input-label for="password" value="Mot de passe"/><x-text-input id="password" class="mt-1 block w-full" type="password" name="password" required/><x-input-error :messages="$errors->get('password')"/></div>
-            <div><x-input-label for="password_confirmation" value="Confirmer le mot de passe"/><x-text-input id="password_confirmation" class="mt-1 block w-full" type="password" name="password_confirmation" required/></div>
+            <div><x-input-label for="password" value="Mot de passe"/><x-password-input id="password" class="mt-1 block" name="password" required autocomplete="new-password"/><x-input-error :messages="$errors->get('password')"/></div>
+            <div><x-input-label for="password_confirmation" value="Confirmer le mot de passe"/><x-password-input id="password_confirmation" class="mt-1 block" name="password_confirmation" required autocomplete="new-password"/></div>
         </div>
         <div class="mt-4 flex items-center justify-end gap-4"><a class="text-sm underline" href="{{ route('login') }}">Déjà inscrit ?</a><x-primary-button>S’inscrire</x-primary-button></div>
     </form>

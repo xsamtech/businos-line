@@ -29,7 +29,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate(['firstname' => ['required', 'string', 'max:255'], 'lastname' => ['required', 'string', 'max:255'], 'email' => ['required', 'email', 'max:255', 'unique:users'], 'phone' => ['required', 'string', 'max:20', 'unique:users'], 'address_1' => ['required', 'string', 'max:2000'], 'city' => ['required', 'string', 'max:255'], 'department' => ['required', 'string', 'max:255'], 'avatar_base64' => ['nullable', 'string', 'max:3000000', 'regex:/^data:image\/(jpeg|png|webp);base64,/'], 'id_card' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'mimetypes:image/jpeg,image/png,application/pdf', 'max:5120'], 'password' => ['required', 'confirmed', Rules\Password::defaults()]]);
-        $user = User::create(['name' => $data['firstname'].' '.$data['lastname'], 'firstname' => $data['firstname'], 'lastname' => $data['lastname'], 'email' => $data['email'], 'phone' => $data['phone'], 'address_1' => $data['address_1'], 'city' => $data['city'], 'department' => $data['department'], 'password' => Hash::make($data['password'])]);
+        $user = User::create(['firstname' => $data['firstname'], 'lastname' => $data['lastname'], 'email' => $data['email'], 'phone' => $data['phone'], 'address_1' => $data['address_1'], 'city' => $data['city'], 'department' => $data['department'], 'password' => Hash::make($data['password'])]);
         $member = Role::where('slug', 'member')->first();
         if ($member) {
             $user->roles()->attach($member, ['is_default' => true, 'assigned_at' => now()]);

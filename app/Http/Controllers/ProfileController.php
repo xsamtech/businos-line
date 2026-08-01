@@ -30,7 +30,6 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $data = $request->safe()->except('avatar_base64');
-        $data['name'] = $data['firstname'].' '.$data['lastname'];
         $request->user()->fill($data);
 
         if ($request->user()->isDirty('email')) {

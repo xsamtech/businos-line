@@ -15,7 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 
-#[Fillable(['name', 'firstname', 'lastname', 'email', 'phone', 'address_1', 'address_2', 'country', 'city', 'department', 'password', 'status'])]
+#[Fillable(['firstname', 'lastname', 'email', 'phone', 'address_1', 'address_2', 'country', 'city', 'department', 'password', 'status'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -34,6 +34,11 @@ class User extends Authenticatable
     public function getRouteKeyName(): string
     {
         return 'uuid';
+    }
+
+    public function getNameAttribute(): string
+    {
+        return trim($this->firstname.' '.$this->lastname);
     }
 
     public function roles(): BelongsToMany
