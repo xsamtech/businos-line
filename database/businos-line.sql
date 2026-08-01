@@ -177,6 +177,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `gains`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `gains` ;
+
 CREATE TABLE IF NOT EXISTS `gains` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `uuid` CHAR(36) NOT NULL,
@@ -353,9 +355,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `password_resets`
+-- Table `password_reset_tokens`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `password_resets` (
+CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(255) NULL,
   `phone` VARCHAR(45) NULL,

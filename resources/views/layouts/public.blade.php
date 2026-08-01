@@ -26,7 +26,25 @@
                 <li><a class="nav-link" href="{{ auth()->check() ? route('notifications') : route('login') }}">{{ __('messages.notifications') }}</a></li>
                 <li><a class="nav-link" href="{{ route('about') }}">{{ __('messages.about') }}</a></li>
                 <li class="dropdown"><a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{{ strtoupper(app()->getLocale()) }}</a><ul class="dropdown-menu">@foreach(['fr' => 'Français', 'en' => 'English', 'es' => 'Español'] as $code => $language)<li><a class="dropdown-item" href="{{ route('locale', $code) }}">{{ $language }}</a></li>@endforeach</ul></li>
-                @auth<li><a class="btn btn-primary" href="{{ route('profile.edit') }}">{{ __('messages.account') }}</a></li>@else<li><a class="btn btn-primary" href="{{ route('login') }}">{{ __('messages.login') }}</a></li>@endauth
+                @auth
+                    <li class="dropdown">
+                        <button class="btn border-0 p-0 dropdown-toggle-no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="{{ __('messages.account') }}">
+                            @if(auth()->user()->avatar)
+                                <img class="navbar-avatar" src="{{ Storage::url(auth()->user()->avatar->file_url) }}" alt="{{ auth()->user()->name }}">
+                            @else
+                                <span class="navbar-avatar-placeholder"><i class="bi bi-person-fill"></i></span>
+                            @endif
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end user-menu shadow border-0">
+                            <li class="px-3 py-2"><strong class="d-block">{{ auth()->user()->name }}</strong><small class="text-muted">{{ auth()->user()->email }}</small></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item d-flex align-items-center gap-2" href="{{ route('profile.edit') }}"><i class="bi bi-person-gear text-primary"></i>{{ __('messages.account') }}</a></li>
+                            <li><form method="POST" action="{{ route('logout') }}">@csrf<button class="dropdown-item d-flex align-items-center gap-2 text-danger" type="submit"><i class="bi bi-box-arrow-right"></i>{{ __('messages.logout') }}</button></form></li>
+                        </ul>
+                    </li>
+                @else
+                    <li><a class="btn btn-primary" href="{{ route('login') }}">{{ __('messages.login') }}</a></li>
+                @endauth
             </ul>
         </div>
     </div>

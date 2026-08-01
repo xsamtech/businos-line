@@ -14,4 +14,19 @@ class AppNotification extends Model
     {
         return ['is_read' => 'boolean'];
     }
+
+    public function targetUrl(): string
+    {
+        if ($this->saving_id) {
+            return route('savings');
+        }
+        if ($this->gain_id) {
+            return route('gains');
+        }
+        if ($this->payment_id) {
+            return $this->type === 'gain_obtained' ? route('gains') : route('savings');
+        }
+
+        return route('home');
+    }
 }

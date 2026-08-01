@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Models\PasswordResetToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -30,12 +31,18 @@ class RegistrationTest extends TestCase
             'address_1' => '1 rue de la Tontine',
             'city' => 'Paris',
             'department' => 'Paris',
+            'avatar_base64' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9ZlWQAAAAASUVORK5CYII=',
             'id_card' => UploadedFile::fake()->image('identity.jpg'),
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
 
-        $this->assertAuthenticated();
+        $response->assertSessionHasNoErrors();
         $response->assertRedirect(route('savings', absolute: false));
+        $this->assertAuthenticated();
+        $this->assertDatabaseHas('files', ['file_type' => 'photo', 'mime_type' => 'image/png']);
+        $this->assertDatabaseHas('password_reset_tokens', ['email' => 'test@example.com']);
+        $this->assertMatchesRegularExpression('/^\d{6}$/', PasswordResetToken::where('email', 'test@example.com')->firstOrFail()->token);
+        $this->assertDatabaseHas('notifications', ['type' => 'welcome_new_member']);
     }
 }

@@ -1,1 +1,21 @@
-@extends('layouts.admin') @section('content')<div class="row align-items-center mb-4"><div class="col-md-6"><form method="get"><select class="form-select" name="subject" onchange="this.form.submit()">@foreach($subjects as $option)<option value="{{ $option->id }}" @selected($subject?->is($option))>{{ $option->subject }}</option>@endforeach</select></form></div><div class="col-md-6 text-md-end mt-3 mt-md-0"><div class="btn-group"><button class="btn btn-primary">Ajouter un sujet</button><button class="btn btn-outline-primary">Ajouter un titre et ses contenus</button></div></div></div>@if($subject)<h1>{{ $subject->subject }}</h1><p>{{ $subject->description }}</p>@foreach($subject->titles as $title)<div class="card mb-4"><div class="card-header d-flex justify-content-between"><h4>{{ $title->title }}</h4><div><button class="btn btn-sm btn-outline-primary"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-outline-danger"><i class="bx bx-trash"></i></button></div></div><div class="card-body">@foreach($title->contents as $content)<div class="border-bottom pb-3 mb-3"><div class="float-end"><button class="btn btn-sm btn-outline-primary"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-outline-danger"><i class="bx bx-trash"></i></button></div>@if($content->subtitle)<h5>{{ $content->subtitle }}</h5>@endif<p>{{ $content->content }}</p><ul>@foreach($content->dashes as $dash)<li>{{ $dash->dash_content }}<ul>@foreach($dash->children as $child)<li>{{ $child->dash_content }}</li>@endforeach</ul></li>@endforeach</ul></div>@endforeach</div></div>@endforeach@endif@endsection
+@extends('layouts.admin')
+
+@section('content')
+    <div class="row align-items-center g-3 mb-4">
+        <div class="col-md-6"><form method="get"><select class="form-select" name="subject" onchange="this.form.submit()">@foreach($subjects as $option)<option value="{{ $option->id }}" @selected($subject?->is($option))>{{ $option->subject }}</option>@endforeach</select></form></div>
+        <div class="col-md-6 text-md-end"><div class="btn-group"><button class="btn btn-primary">Ajouter un sujet</button><button class="btn btn-outline-primary">Ajouter un titre et ses contenus</button></div></div>
+    </div>
+    @if($subject)
+        <h1>{{ $subject->subject }}</h1><p class="lead">{{ $subject->description }}</p>
+        @foreach($subject->titles as $title)
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center"><h4 class="mb-0">{{ $title->title }}</h4><div class="d-flex gap-2"><button class="btn btn-sm btn-outline-primary"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-outline-danger"><i class="bx bx-trash"></i></button></div></div>
+                <div class="card-body">
+                    @foreach($title->contents as $content)
+                        <div class="border-bottom pb-3 mb-3"><div class="float-end d-flex gap-2"><button class="btn btn-sm btn-outline-primary"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-outline-danger"><i class="bx bx-trash"></i></button></div>@if($content->subtitle)<h5>{{ $content->subtitle }}</h5>@endif<p>{{ $content->content }}</p><ul>@foreach($content->dashes as $dash)<li>{{ $dash->dash_content }}@if($dash->children->isNotEmpty())<ul>@foreach($dash->children as $child)<li>{{ $child->dash_content }}</li>@endforeach</ul>@endif</li>@endforeach</ul></div>
+                    @endforeach
+                </div>
+            </div>
+        @endforeach
+    @endif
+@endsection
