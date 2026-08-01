@@ -13,7 +13,7 @@
 <div id="ajax-loader" class="ajax-loader d-none"><div class="spinner-border text-light"></div></div>
 <div class="layout-wrapper layout-content-navbar"><div class="layout-container">
 <aside class="layout-menu menu-vertical menu bg-menu-theme">
-    <div class="app-brand demo"><a class="app-brand-link" href="{{ route('admin.dashboard') }}"><img src="{{ asset('assets/img/brand.png') }}" height="44" alt="Businos Line"></a></div>
+    <div class="app-brand demo"><a class="app-brand-link" href="{{ route('admin.dashboard') }}"><img src="{{ asset('assets/img/brand.png') }}" height="40" alt="Businos Line"></a></div>
     <ul class="menu-inner py-1">@foreach([['admin.dashboard','bx-home-circle','Tableau de bord'],['admin.roles','bx-shield','Rôles'],['admin.users','bx-user','Utilisateurs'],['admin.savings','bx-wallet','Épargnes'],['admin.gains','bx-trophy','Gains'],['admin.abouts','bx-info-circle','Infos légales']] as $item)<li class="menu-item {{ request()->routeIs($item[0].'*') ? 'active' : '' }}"><a class="menu-link" href="{{ route($item[0]) }}"><i class="menu-icon tf-icons bx {{ $item[1] }}"></i><div>{{ $item[2] }}</div></a></li>@endforeach</ul>
 </aside>
 <div class="layout-page">
